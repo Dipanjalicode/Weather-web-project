@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {{>headerlink}} 
+  <!--<script src="../../js/main.js"></script>-->
+  </head>
+  <body>
+  {{>navbar}} 
+   
+   <!--main header -->
+      <div class="container-fluid main_header">
+     <div class="row">
+      
+       <div class="col-md-10 col-12 mx-auto">
+         <div class="main_content">
+           <form class="temp_form">
+             <input type="text" id="cityName" placeholder="enter your city name" autocomplete="off" >
+             <input type="submit" id="submitbtn" value="search"> 
+            </form>
+           
+           </div>
+           <div class="tempinfo">
+             <div class="top_layer">
+               
+               <p id="day">Tuesday </p>
+               <p id="today_date">31.01.2021</p>
+               
+             </div>
+             <div class="main_layer">
+               <p id="city_name">content came after search</p>
+               <div  id="middle_layer" class="data_hide">
+                 <p id="temp"><span id="temp_val">0</span><sup>o</sup>C</p>
+                 <p id="temp_status"><i class="fas fa-sun " style="color: #ff4000;"></i></p>
+               </div>
+               
+               
+               
+               
+             </div>
+           </div>
+       
+         
+      </div>
+    </div>
+ </div>
+<script>
+   
+   const city_name=document.getElementById("cityName");
+const submitbtn=document.getElementById("submitbtn");
+const cityname=document.getElementById("city_name");
+const temp=document.getElementById("temp_val");
+const temp_status=document.getElementById("temp_status");
+const datahide=document.getElementById("middle_layer");
+
+const getinfo=async(event)=>{
+  
+  event.preventDefault();
+  const city=city_name.value;
+  if(city===""){
+    cityname.innerHTML="plz enter city name before search"
+    datahide.classList.add("data_hide");
+    
+     }
+  else{
+   try{
+   let url=`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=a77b063b7a1ab745688931f68bfd78fe`
+    const response=await fetch(url);
+    const data=await response.json();
+    const arrdata=[data];
+    const t=arrdata[0].main.temp;
+    let te=(t-273);
+    temp.innerHTML=parseInt(te);
+    
+    let tempstatus=arrdata[0].weather[0].main;
+    cityname.innerHTML=`${arrdata[0].name}, ${arrdata[0].sys.country}`;
+      if(tempstatus=="Clear"){
+     temp_status.innerHTML="<i class='fas fa-sun ' style='color: #eccc68;' ></i>" 
+   }
+   else if(tempstatus=="Clouds" ){
+     temp_status.innerHTML="<i class='fas fa-cloud ' style='color: #f1f2f6;' ></i>" 
+   }
+   else if(tempstatus=="Haze" ){
+     temp_status.innerHTML="<i class='fas fa-smog' style='color:red;' ></i>" 
+   }
+   else if(tempstatus=="Rainy"){
+     temp_status.innerHTML="<i class='fas fa-cloud-rain ' style='color: #a4b0be;' ></i>" 
+   }
+  else {
+     temp_status.innerHTML="<i class='fas fa-sun ' style='color:#eccc68;' ></i>" 
+   }
+   datahide.classList.remove("data_hide");
+   } catch{
+     cityname.innerHTML="plz enter city name properly before search"
+     datahide.classList.add("data_hide");
+   }
+  
+  }
+}
+submitbtn.addEventListener("click",getinfo);
+   
+   
+   
+   
+ </script>
+   
+    <script>
+    const day=document.getElementById("day");
+    const today_date=document.getElementById("today_date");
+      var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+var d = new Date();
+var dayName = days[d.getDay()];
+day.innerHTML=`${dayName}`;
+today_date.innerHTML=`${d.getDate()}/${d.getMonth()}/${d.getFullYear()}`;
+      
+      
+      
+    </script>
+     <!--footercode-->
+
+  {{>footer}} 
+  
+  
+  
+  
+  
+  
+</body>
+  
+  
+  
+</html>
