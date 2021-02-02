@@ -5,7 +5,7 @@ const hbs=require("hbs");
 const add=path.join(__dirname,"../public");
 const hbspath=path.join(__dirname,"../templets/views");
 const partials_path=path.join(__dirname,"../templets/partials");
-var server_port = process.env.YOUR_PORT || process.env.PORT ||12815;
+var server_port = process.env.PORT ||12815;
 var server_host = process.env.YOUR_HOST || 'localhost';
 app.use(express.static(add));
 app.set('view engine', 'hbs');
