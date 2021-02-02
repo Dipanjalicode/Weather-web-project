@@ -6,7 +6,7 @@ const add=path.join(__dirname,"../public");
 const hbspath=path.join(__dirname,"../templets/views");
 const partials_path=path.join(__dirname,"../templets/partials");
 var server_port = process.env.PORT ||12815;
-var server_host = process.env.YOUR_HOST || 'localhost';
+
 app.use(express.static(add));
 app.set('view engine', 'hbs');
 app.set('views', hbspath);
@@ -48,7 +48,7 @@ app.get("*",(req,res)=>{
 
 
 
-app.listen(server_port, server_host,function() {
+app.listen(server_port,function() {
     console.log('Listening on port %d', server_port);
 });
 
