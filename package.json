@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1", 
     "start":"node src/app.js", 
-     "build": "webpack"
-  },
+     "build": "ng-build", 
+       "heroku-postbuild": "ng build --prod" },
   "author": "Dipanjali singh",
   "license": "ISC",
   "dependencies": {
